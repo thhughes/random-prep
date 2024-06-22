@@ -1,6 +1,7 @@
 # Xcode
 .DS_Store
 build/
+bin/
 DerivedData/
 *.hmap
 *.ipa
