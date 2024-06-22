@@ -3,8 +3,35 @@
 //  dsr
 //
 
-#include "test-stack.h"
+#include "test-runner.h"
+#include "stack.h"
+
 #include <string>
+#include <vector>
+#include <iostream>
+#include <gtest/gtest.h>
+
+
+namespace DataStructures {
+
+class StackTester : public Quality::Tester {
+public:
+    StackTester(Stack::Type t) : testType(t), Quality::Tester(Quality::RunAllTests, Quality::ResultFormatter::Default) {}
+    
+    static bool TestAll(std::string& errStr);
+    
+protected:
+    virtual Quality::TestList& getTests() override;
+    virtual void setupTest() override;
+    virtual void cleanupTest() override;
+    
+    std::unique_ptr<Stack> testStack;
+    Stack::Type testType;
+    
+    
+};
+
+}
 
 using namespace DataStructures;
 
@@ -211,3 +238,20 @@ bool EmptyStackTests(DataStructures::Stack* stackToTest, std::string& errStr) {
     
     
 }
+
+
+
+
+
+// Example test case
+TEST(StackTest, TestAll) {
+    std::string results;
+    // EXPECT_TRUE(DataStructures::QueueTester::TestAll(results));
+    EXPECT_TRUE(true);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+

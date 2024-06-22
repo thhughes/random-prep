@@ -1,29 +1,29 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+add_library(data-structures-shared data-structures-shared.cpp)
+
+## 
+## Shared Library for all of the subdir content 
+## 
+add_library(data-structures-global-shared STATIC 
+    data-structures-shared.cpp)
+
 ##
 ## Add all subdirectories with intent to create the libraries 
 ##
 add_subdirectory(queue)
-
-
-##
-## Build the shared configs 
-##
-file(GLOB data-structures-cpp CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-
-add_library(data-structures-shared ${data-structures-cpp})
-
-target_link_libraries(data-structures-shared 
-    queue
-    )
-
+add_subdirectory(stack)
 
 ##
 ## Build Interface Library 
 ##
 add_library(data-structures INTERFACE)
-target_link_libraries(data-structures INTERFACE data-structures-shared)
+target_link_libraries(data-structures INTERFACE 
+    data-structures-global-shared
+    queue
+    stack
+    )
 
 
 
