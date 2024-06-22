@@ -243,6 +243,47 @@ bool EmptyStackTests(DataStructures::Stack* stackToTest, std::string& errStr) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+// Define a test fixture class
+class MyTestFixture : public ::testing::Test {
+protected:
+
+    MyTestFixture() {
+
+    }
+
+    ~MyTestFixture() override {
+
+    }
+
+    void SetUp() override {
+
+    }
+
+    void TearDown() override {
+
+    }
+
+    std::string shared_resource;
+};
+
+
+
+
+
+
+
+
+
 // Example test case
 TEST(StackTest, TestAll) {
     std::string results;
