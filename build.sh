@@ -5,7 +5,7 @@ mkdir build
 echo "Begining build..."
 pushd build
 cmake ..
-cmake --build .
-ctest
+cmake --build . 
+ctest --output-on-failure
 popd
 echo "fin"
