@@ -17,9 +17,6 @@ public:
         LinkedListStack,    /* linked-list-stack.h */
         
     };
-    static std::string_view typeAsStr(Type t); 
-    
-    static std::unique_ptr<Stack> Factory(Type t);
     
     virtual ~Stack() { }
     /// @brief Should technically implement all the copy, move, assignment, etc. operators.

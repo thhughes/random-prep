@@ -31,6 +31,31 @@ protected:
 
 TYPED_TEST_SUITE_P(StackTesterFixture);
 
+/// After Construction: 
+TYPED_TEST_P(StackTesterFixture, PeekAfterConstructionIsEmpty) {
+    auto v = this->testStack->peek();
+    EXPECT_TRUE(v.empty);
+}
+TYPED_TEST_P(StackTesterFixture, PopAfterConstructionIsEmpty) {
+    auto v = this->testStack->pop();
+    EXPECT_TRUE(v.empty);
+}
+TYPED_TEST_P(StackTesterFixture, EmptyOnConstruction) {
+    EXPECT_TRUE(this->testStack->isEmpty());
+}
+TYPED_TEST_P(StackTesterFixture, OnEmptyList) {
+    auto v = this->testStack->pop(); 
+    EXPECT_TRUE(v.empty);
+
+    EXPECT_TRUE(this->testStack->isEmpty());
+    this->testStack->clear();
+    EXPECT_TRUE(this->testStack->isEmpty());
+    
+    v = this->testStack->peek(); 
+    EXPECT_TRUE(v.empty);
+}
+
+
 TYPED_TEST_P(StackTesterFixture, PushAndPeek) {
     this->testStack->push({1});
     auto v = this->testStack->peek();
@@ -52,38 +77,38 @@ TYPED_TEST_P(StackTesterFixture, PopUntilEmpty) {
     auto v = this->testStack->pop();
     EXPECT_TRUE(this->testStack->isEmpty());
 }
-
-TYPED_TEST_P(StackTesterFixture, EmptyOnConstruction) {
-    EXPECT_TRUE(this->testStack->isEmpty());
-}
-
 TYPED_TEST_P(StackTesterFixture, ClearWorksOnList) {
     this->testStack->push({1});
     EXPECT_FALSE(this->testStack->isEmpty());
     this->testStack->clear();
     EXPECT_TRUE(this->testStack->isEmpty());
 }
-
-TYPED_TEST_P(StackTesterFixture, OnEmptyList) {
-    auto v = this->testStack->pop(); 
-    EXPECT_TRUE(v.empty);
-
-    EXPECT_TRUE(this->testStack->isEmpty());
+TYPED_TEST_P(StackTesterFixture, ClearThenAdd) {
+    this->testStack->push({1});
+    EXPECT_FALSE(this->testStack->isEmpty());
     this->testStack->clear();
     EXPECT_TRUE(this->testStack->isEmpty());
-    
-    v = this->testStack->peek(); 
-    EXPECT_TRUE(v.empty);
+    this->testStack->push({1});
+    EXPECT_FALSE(this->testStack->isEmpty());
+    auto v = this->testStack->pop();
+    EXPECT_FALSE(v.empty);
+    EXPECT_EQ(1, v.obj);
 }
 
-REGISTER_TYPED_TEST_SUITE_P(StackTesterFixture, 
+
+REGISTER_TYPED_TEST_SUITE_P(StackTesterFixture,
+    PeekAfterConstructionIsEmpty,
+    PopAfterConstructionIsEmpty, 
+    EmptyOnConstruction, 
+    OnEmptyList, 
     PushAndPeek, 
     PushAndIsEmpty, 
     PopUntilEmpty, 
     ClearWorksOnList, 
-    EmptyOnConstruction, 
-    OnEmptyList
+    ClearThenAdd
     );
+
+
 
 INSTANTIATE_TYPED_TEST_SUITE_P(StdLibStack, StackTesterFixture, DataStructures::StdLibStack);
 INSTANTIATE_TYPED_TEST_SUITE_P(LLStack, StackTesterFixture, DataStructures::LinkedListStack);
